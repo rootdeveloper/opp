@@ -11,6 +11,8 @@
 		<delete failonerror="false" quiet="true" includeEmptyDirs="true">
 			<fileset dir="${dist.root}" />
 		</delete>
+		
+		<delete dir="${dist.root}" />
 	</target>
 
 	<target name="compile" depends="setClasspath">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="install" name="OpenWeb">
+<project basedir="." default="build" name="OpenWeb">
 	<property file="build.properties" />
 	<property name="web.src" location="src" />
 	<property name="web.dir" location="web" />
@@ -22,6 +22,8 @@
 		<delete failonerror="false" quiet="true" includeEmptyDirs="true">
 			<fileset dir="${build.root}" />
 		</delete>
+		
+		<delete dir="${dist.root}" />
 	</target>
 
 	<target name="compile" depends="setClasspath">
@@ -110,12 +112,18 @@
 		<!--delete dir="${build.root}"/-->
 	</target>
 
+	<!-- New default target (no hardwired istallation) -->
+	<target name="build" depends="openpixpdq,-generate-war" description="Installs application in the domain">		
+		<echo message="build target executado com sucesso!" />
+	</target>
+	
+	<!-- Hardwired configuration for installation -->
 	<target name="install" depends="openpixpdq,-generate-war" description="Installs application in the domain">		
 		<copy overwrite="${FORCE}" todir="${install.app.dir}">
 			<fileset file="${dist.root}/${war.name}" />
 		</copy>
-
 	</target>
+	
 	<target name="openpixpdq">
 		 <ant antfile="${openpixpdq.build}" target="Jar" inheritall="false"/>
 		 <ant antfile="${openempiadapter.build}" target="Jar" inheritall="false"/>
