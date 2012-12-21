@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+<tiles-definitions>
+
+     <definition name=".pixpdqLayout" path="/pages/pixpdqLayout.jsp">
+        <put name="header" value="/pages/header.jsp" />
+        <put name="footer" value="/pages/footer.jsp" />
+        <put name="body" value="/pages/body.jsp" />
+    </definition>
+
+</tiles-definitions>

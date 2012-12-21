@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="Jar" name="OpenPIX/PDQ">
+	<property file="build.properties" />
+	<property name="build.root" location="temp" />
+	<property name="build.src" location="${build.root}/src" />
+	<property name="build.conf" location="${build.root}/conf" />
+	<property name="dist.root" location="dist" />
+	<property name="lib.src" location="lib" />
+	<property name="src.dir" location="src" />
+	<property name="test.src.dir" location="src/test" />
+	<property name="openempi.adapter.lib.dir" location="${openempiadapter.root}/lib" />
+
+	<target name="clean" description="Clean out compiled src">
+		<!-- Remove build/* -->
+		<delete failonerror="false" quiet="true" includeEmptyDirs="true">
+			<fileset dir="${dist.root}" />
+		</delete>
+	</target>
+
+	<target name="compile" depends="setClasspath">
+		<javac failonerror="true" debug="true" srcdir="${build.root}" destdir="${build.root}" classpath="${classpath}" />
+	</target>
+
+	<target name="setClasspath">
+		<property environment="env" />
+		<path id="build.classpath">
+			<fileset dir="${lib.src}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${openempi.adapter.lib.dir}">
+				<include name="**/*.jar" />
+				<!--exclude name="openpixpdq*.jar"/-->
+				<exclude name="braid-base*.jar"/>
+			</fileset>
+		</path>
+		<property name="classpath" refid="build.classpath" />
+		<echo message="Classpath Settings done: ${classpath}" />
+	</target>
+
+	<target name="debug" depends="-init" unless="built" description="Buid with debug flags">
+
+		<copy todir="${build.root}">
+			<fileset dir="${src.dir}/java">
+				<include name="**/*.java" />
+			</fileset>
+		</copy>
+		<copy todir="${build.root}">
+			<fileset dir="${src.dir}/test">
+				<include name="**/*.java" />
+			</fileset>
+		</copy>
+
+		<antcall target="compile" inheritAll="true" inheritRefs="true">
+			<param name="optimize" value="false" />
+			<param name="debug" value="true" />
+		</antcall>
+		<property name="built" value="true" />
+
+		<copy todir="${build.conf}">
+			<fileset dir="conf" />
+		</copy>
+
+	</target>
+
+	<target name="-init" unless="initted">
+
+		<property name="initted" value="true" />
+
+		<mkdir dir="${build.root}" />
+		<mkdir dir="${build.conf}"/>
+		<mkdir dir="${dist.root}" />
+	</target>
+
+	<target name="Jar" depends="debug" description="generate Util jar file">
+
+		<!-- Create destination directory for jar file -->
+		<jar jarfile="${dist.root}/${jar.name}" basedir="${build.root}" excludes="${to.exclude}"/>
+		<echo message="Jar Created [${dist.root}/${jarname}]"/>
+		<echo message="Deleting temporary directory:[${build.root}]"/>
+		<delete dir="${build.root}" />
+
+		<!-- Copy openpixpdq.jar to OpenEmpiAdapter lib -->
+		<copy todir="${openempi.adapter.lib.dir}">
+			<fileset file="${dist.root}/${jar.name}" />
+		</copy>
+	</target>
+
+	<target name="javadoc" description="Generates javadoc" depends="-init">
+		<delete dir="${javadoc.root}" />
+		<mkdir dir="${javadoc.root}" />
+		<javadoc Package="true" Use="true" SplitIndex="true" destdir="${javadoc.root}" Windowtitle="OpenPIXPDQ API Specification" Doctitle="OpenPIXPDQ API Specification" version="true" source="${ant.java.version}" classpathref="build.classpath">
+			<packageset dir="${src.dir}" />
+		</javadoc>
+	</target>
+
+	<target name="test.setup" depends="db.clean,-init,setClasspath,debug">
+		<mkdir dir="reports" />
+		<junit printsummary="yes" haltonfailure="no">
+			<classpath>
+				<pathelement path="${classpath}" />
+			</classpath>
+
+			<formatter type="plain" />
+			<test name="org.openhealthexchange.openpixpdq.integrationtests.PdqLoadPatientTest" todir="reports" haltonfailure="no">
+			</test>
+		</junit>
+	</target>
+
+	<target name="test" depends="test.setup">
+
+		<junit printsummary="yes" haltonfailure="no">
+			<classpath>
+				<pathelement path="${classpath}" />
+			</classpath>
+			
+			<formatter type="plain" />
+			<batchtest fork="yes" todir="reports">
+				<fileset dir="${build.root}">
+					<include name="**/*Test*.java" />
+					<exclude name="**/TestLogContext.java" />
+					<exclude name="**/AbstractEJBTestCase.java" />
+					<exclude name="**/AbstractPixPdqTestCase.java" />
+					<exclude name="**/PdqLoadPatientTest.java" />
+					<exclude name="**/PixLoadConnectathonPatientTest.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="db.clean">
+		<sql driver="org.postgresql.Driver" url="jdbc:postgresql://localhost/openempi?useUnicode=true&amp;characterEncoding=UTF-8" userid="openempi" password="openempi">
+			<classpath>
+				<pathelement path="../OpenWeb/Web/WEB-INF/lib/postgresql-8.3-603.jdbc4.jar"/>
+			</classpath>
+			<transaction  src="conf/DBCleanup.sql"/>
+		</sql>
+	</target>
+
+</project>

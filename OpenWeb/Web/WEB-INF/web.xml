@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+
+	<welcome-file-list>
+		<welcome-file>pages/welcome.jsp</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<description>
+		</description>
+		<display-name>ConfigServlet</display-name>
+		<servlet-name>ConfigServlet</servlet-name>
+		<servlet-class>org.openhealthexchange.messagestore.servlet.ConfigServlet</servlet-class>
+		 <load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>
+			org.apache.struts.action.ActionServlet
+		</servlet-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>/WEB-INF/struts-config.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>jmesa</servlet-name>
+		<servlet-class>	org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+	</servlet>
+	
+	<context-param>
+		<param-name>jmesaPreferencesLocation</param-name>
+		<param-value>jmesa.properties</param-value>
+	</context-param>
+	<context-param>
+		<param-name>jmesaMessagesLocation</param-name>
+		<param-value>jmesaResourceBundle</param-value>
+	</context-param>
+
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>jmesa</servlet-name>
+		<url-pattern>*.run</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ConfigServlet</servlet-name>
+		<url-pattern>/ConfigServlet</url-pattern>
+	</servlet-mapping>
+	<session-config>
+		<session-timeout>120</session-timeout>
+	</session-config>
+
+
+
+	<!-- Struts Tag Library Descriptors -->
+	<taglib>
+	     <taglib-uri>/WEB-INF/lib/struts-tiles.tld</taglib-uri>
+	     <taglib-location>/WEB-INF/struts-tiles.tld</taglib-location>
+	</taglib> 
+	<taglib>
+		<taglib-uri>/WEB-INF/lib/struts-html.tld</taglib-uri>
+		<taglib-location>/WEB-INF/struts-html.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>/WEB-INF/lib/struts-bean.tld</taglib-uri>
+		<taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>/WEB-INF/lib/struts-logic.tld</taglib-uri>
+		<taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>/WEB-INF/lib/struts-nested.tld</taglib-uri>
+		<taglib-location>/WEB-INF/struts-nested.tld</taglib-location>
+	</taglib>
+	
+	<taglib>
+		<taglib-uri>/WEB-INF/lib/jmesa.tld</taglib-uri>
+		<taglib-location>/WEB-INF/jmesa.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>/WEB-INF/lib/core.tld</taglib-uri>
+		<taglib-location>/WEB-INF/core.tld</taglib-location>
+	</taglib>
+</web-app>

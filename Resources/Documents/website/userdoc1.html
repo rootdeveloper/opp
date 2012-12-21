@@ -1,0 +1,1525 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+  <head>
+    <title>OpenPIXPDQ</title>
+    <style type="text/css" media="all">
+      @import url("./css/base.css");
+      @import url("./css/theme.css");
+      @import url("./css/site.css");
+    </style>	
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />        
+   </head>
+  <body class="composite">
+    <div id="banner">
+        <a href="" id="bannerLeft">    
+            <font size="5"> OpenPIXPDQ</font>
+        </a>                      
+		<div class="clear">
+			<hr/>
+		</div>
+    </div>
+    <div id="breadcrumbs">
+		<div class="xright">   
+			<a href="http://www.ihe.net/Technical_Framework/index.cfm#IT" target="_blank">IHE Profiles</a>|			
+			<a href="http://misys.com/corp/OpenSource/" target="_blank">Misys OpenSource</a>  
+		</div>
+		<div class="clear">
+			<hr/>
+		</div>
+    </div>
+    <div id="leftColumn">
+		<div id="navcolumn">
+		<h5>Welcome</h5>
+		<ul>                      
+			<li class="none">
+              <a href="index.html">Overview</a>
+			</li>              
+			<li class="none">
+              <a href="news.html">News</a>
+			</li>
+        </ul>
+        <h5>OpenPIXPDQ</h5>
+        <ul>              
+			<li class="none">
+              <a href="https://sourceforge.net/project/showfiles.php?group_id=241607">Download</a>
+			</li>              
+			<li class="none">
+              <a href="javadoc/index.html" >JavaDocs (API)</a>
+			</li>              
+        </ul>
+        <h5>Developer Guides</h5>
+        <ul>              
+			<li class="none">
+              <strong>User Manual</strong>
+			</li>              			           
+			<li class="none">
+              <a href="messagesamples.html">Message Samples</a>
+			</li>  
+			<li class="none">
+              <a href="https://openhie.projects.openhealthtools.org/" target="contentBox">OpenEMPI</a>
+			</li>             
+        </ul>          
+        <h5>Project Info</h5>
+        <ul>              
+			<li class="none">
+              <a href="https://sourceforge.net/tracker/?group_id=241607" target="OpenPIXPDQDoc">Issue Tracking</a>
+			</li>              
+			<li class="none">
+              <a href="https://sourceforge.net/svn/?group_id=241607" target="OpenPIXPDQDoc">SVN Repository</a>
+			</li>              
+			<li class="none">
+              <a href="https://sourceforge.net/mail/?group_id=241607" target="OpenPIXPDQDoc">Mailing Lists</a>
+			</li>              
+			<li class="none">
+              <a href="https://sourceforge.net/project/memberlist.php?group_id=241607" target="OpenPIXPDQDoc">Developers</a>
+			</li>
+        </ul>
+        <h5>Project Reports</h5>
+        <ul>              
+			<li class="none">
+              <a href="mesatests.html">Mesa Tests</a>
+			</li>
+			<li class="none">
+              <a href="IHEIS.html">IHE Integration Statement</a>
+			</li>            
+        </ul> 
+			
+        <a href="http://sourceforge.net" title="Hosted on SourceForge.net" id="poweredBy">
+            <img alt="Hosted on SourceForge.net" src="http://sflogo.sourceforge.net/sflogo.php?group_id=38899&type=1" />
+        </a>
+        <a href="http://www.misys.com/" title="powered by Misys" id="poweredBy">
+            <img alt="powered by Misys" src="images/clip_image002.jpg" />
+        </a>
+	</div>
+    </div>
+	<div id="bodyColumn">
+		<div id="contentBox">
+			<div class="section">
+			<h3>User Manual</h3>
+			<p><h5>Contents</h5></p>
+			<p><ul id="contents">
+				<li><Strong><a href="#_userdoc">Work with Source Code</a></strong></li>
+				<li><a href="#_sorceoverview">&nbsp;&nbsp;&nbsp;Source Code Overview</a></li>
+				<li><a href="#_binaryoverview">&nbsp;&nbsp;&nbsp;Build from Source Code</a></li>
+				<li><Strong><a href="#_setup">Work with Binary Code</a></strong></li>
+				<li><a href="#_prereq">&nbsp;&nbsp;&nbsp;Prerequisite</a></li>
+				<li><a href="#_install">&nbsp;&nbsp;&nbsp;Installation</a></li>
+				<li><a href="#_setupempi">&nbsp;&nbsp;&nbsp;Set Up OpenEMPI</a></li>	
+				<li><a href="#_deployement">&nbsp;&nbsp;&nbsp;Deployment</a></li>
+				<li><a href="#_conf">&nbsp;&nbsp;&nbsp;Configure OpenPIXPDQ</a></li>
+				<li><a href="#_startstop">&nbsp;&nbsp;&nbsp;Start/Stop PIX and PDQ servers</</a></li>			
+				<li><Strong><a href="#_confmain">OpenPIXPDQ Configuration</a></strong></li>
+				<li><a href="#_conffiles">&nbsp;&nbsp;&nbsp;Understand Configuration Files</</a></li>
+				<li><Strong><a href="#_ui">OpenPIXPDQ UI</a></strong></li>	
+			</ul>
+			</p>
+			<p><a name="#_userdoc"></a>
+			<h5>Work with Source Code</h5></p>
+			<p><a name="#_sorceoverview"></a><strong>Source Code Overview</strong></p>
+			<p>The source code of OpenPIXPDQ library is divided into three modules </p>
+			<p>1.	OpenPIXPDQ</br>
+			   2.	OpenEmpiAdapter</br>
+			   3.	OpenWeb</br>
+			 </p>
+			<p>		
+			OpenPIXPDQ library implements IHE Patient Identifier Cross-Reference (PIX) profile, and Patient Demographic Query (PDQ) profile.</p>
+			<p>IHE PIX and PDQ profiles specify both client and server side PIX/PDQ implementation. However, OpenPIXPDQ implements only the server side actors such as PIX Manager and PDQ supplier. PIX Manager and PDQ Supplier together can also be called PIX/PDQ server.</p>
+<p>OpenPIXPDQ supports 4 server side transactions: 3 transactions for PIX Manager, namely PIX Feed, PIX Query and PIX Update Notification, and one transaction, PDQ Query, for PDQ Supplier.</p>
+<p>EMPI lies underneath PIX Manager and PDQ Supplier, that provides a patient matching algorithm and patient data manipulation API such as create, update and merge patients. (OpenPIXPDQ uses open source OpenEMPI as an eMPI. OpenEMPI is available for download from Open Health Tools site: https://openhie.projects.openhealthtools.org/svn/openhie)</p>
+<p>OpenEmpiAdapter is an adapter meant to fill the gap between eMPI and OpenPIXPDQ. This Adapter converts all data supplied by OpenPIXPDQ to the eMPI understandable format, so that the PIX Manager and PDQ Supplier would not rely on a particular eMPI system.</p>
+<p>OpenWeb is the UI for OpenPIXPDQ. This contains pages like Registration, PIX Query, Patient Demographic Query, Configuration and Message Log. We can configure all actors of PIX/PDQ server using Configuration page, and Message Log page is used to render raw messages from database.</p>
+
+<p><a name="#_binaryoverview"></a><strong>Build from Source Code</strong></p>
+<p>To build your own OpenPIXPDQ, you need the projects OpenPIXPDQ, OpenEmpiAdapter and OpenWeb, as well as OpenEMPI from the openhie project on the OHT site .</p>
+
+<p>OpenPIXPDQ URL: <a href="https://openpixpdq.svn.sourceforge.net/svnroot/openpixpdq">https://openpixpdq.svn.sourceforge.net/svnroot/openpixpdq</a></p>
+
+<p>OpenEMPI URL: <a href="https://openhie.projects.openhealthtools.org/svn/openhie">https://openhie.projects.openhealthtools.org/svn/openhie</a></p>
+
+<p>Each of the three OpenPIXPDQ modules can be run in either IDE or by ant build script. We use Eclipse v3.3 IDE. The required project classpath and setting files are checked into the SVN. To make it work, you may need just minimal setting changes such as JDK location and JBoss (or Tomcat) server configuration.</p>
+<p>The following files can be built by ant build files:</p>
+<p><strong>openempi-adapter.jar:</strong> Run ant build file (build.xml) under OpenEMPIAdapter. Make sure that all paths in build.properties are configured properly. </p>
+<p><strong>openpixpdq.jar:</strong> Run ant build file (build.xml) under OpenPIXPDQ. Make sure that all paths in build.properties are configured properly.  This jar contains core functionality of PIX/PDQ server, and can be run outside web container in a stand alone mode. </p>
+<p><strong>openpixpdq.war:</strong> Run ant build file (build.xml) under OpenWeb. Make sure that all paths in build.properties are configured properly. This will create openpixpdq.jar, openempi-adapter.jar copies under OpenWeb library, and create openpixpdq.war and deploy the war file under <JBoss-HOME>\server\default\deploy. </p>
+<p><strong>openempi.ear:</strong> This file is the work from the openhie project on OHT.  However, we provide a ready to deploy copy of openempi.ear in Resources\OpenEMPI folder on our SVN repository, where you can also find relevant configuration files. </p>
+
+<p><a name="#_setup"></a><h5>Work with Binary Code </h5></p>
+<p>Before install OpenPIXPDQ, you can either download a distributable file, or build your own from the source code as mentioned above. </p>
+
+<p><a name="#_prereq"></a><strong>Prerequisite</strong></p>
+
+<p>Make sure you have installed the following software and java environment before setting up OpenPIXPDQ and OpenEMPI,  </p>
+
+<ul><li>Database – Postgresql or My SQL (Our tested DB version is Postgresql 8.3)</li>
+<li>Application Server -  JBoss Server  (Our tested version is JBoss 4.0.5GA)</li>
+<li>Java – Jdk 1.6 </li>
+</ul>
+<p><a name="#_install"></a><strong>Installation</strong></p>
+<p><ul><li>	Just unzip the distributable file to a machine where you would like to install the PIX/PDQ server</li></ul></p>
+
+<p><a name="#_setupempi"></a><strong>Setup OpenEMPI</strong></p>
+<p>
+<ul><li>?	Create a database instance, for example openempi. You may want to create a database user for it.</li>
+<li>Create tables - run<strong> ICS_schema_creat-postgres.sql </strong>or<strong> ICS_schema_creat-mysql.sql</strong> script located under openempi\conf </li>
+<li>Copy <strong>ICS.properties, IcsSql.xml</strong> (from openempi/conf ) to a configuration directory on the server where jboss is hosted, and add -Dics.properties.file property to JBoss JVM. For example, in Windows, add this JAVA_OPTS in the run.bat file: JAVA_OPTS=%JAVA_OPTS% -Dics.properties.file=<your configuration directory> \ICS.properties </li>
+<li>Edit <span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal;mso-bidi-font-weight:bold;'>ICS.properties</span>, set the property <span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal;mso-bidi-font-weight:bold;'>ICS_SQL_FILE =</span> your configuration directory <span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal;mso-bidi-font-weight:bold;'>\IcsSql.xml</span> </li>
+<li>Configure a data source in Jboss server,  If your data source name is <span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal;mso-bidi-font-weight:bold;'>OpenempiDS</span>, then edit <span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal;mso-bidi-font-weight:bold;'>ICS.properties</span>, and set the property <span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal;mso-bidi-font-weight:bold;'>JNDI_DATASOURCE = java:/OpenempiDS</span></li>
+<li>Make sure you have a jdbc driver for the database of your choice under jboss server\default\lib. For Postgres, we use <strong>postgresql-8.3-603.jdbc4.jar</strong> </li>
+</ul>
+</p>
+<p><a name="#_deployement"></a><strong>Deployment</strong></p>
+
+<p>The out-of-the-box distributable file (openpixpdq-1.0.zip) contains both openpixpdq.war and openempi.ear. To deploy, just drop the both files to the <JBoss Home directory>\server\default\deploy directory. That’s all you need to do.  </p>
+
+
+<p><a name="#_conf"></a><strong>Configure OpenPIXPDQ</strong></p>
+
+<p>	To configure PIX Manager and PD Supplier actors, follow the section below: <a href="#_confmain">OpenPIXPDQ Configuration<a></p>
+
+<p><a name="#_startstop"></a><strong>Start/Stop PIX and PDQ servers</strong></p>
+
+<p>There are two ways to start/stop PIX and PDQ servers</p>
+
+<p>1. For web based OpenPIXPDQ running in JBoss Server</p>
+<ul>
+<li>Follow the above deployment section to deploy openempi.ear and openpixpdq.war.</li>
+<li>Start JBoss server.</li>
+<li>Go to http://localhost:8080/openpixpdq, where 8080 is the default JBoss server port iunless you have changed it.</li>
+<li>Load all actors by browsing IheActors.xml on the Configuration UI</li>
+<li>Select the check box of particular actor or all actors</li>
+<li>Click on save button to start selected actors</li>
+<li>To stop press Stop all button.</li>
+</ul>
+
+<p>2. For stand alone OpenPIXPDQ running with command line   </p>
+<ul>
+<li>Unfortunately, you still need to deploy and run openempi.ear in JBoss server.</li>
+<li>But instead of using openpixpdq.war, you just run the main method in PixPdqServer to start or stop PIX/PDQ server. The required libs are enclosed in the distributable.</li>
+</ul>
+ <p>Note: We have not created Windows and Unix command scripts to start up and shut down the PIX/PDQ server. We leave them as your home work assignment. You are welcome to contribute them to us if you have worked on them.</p>
+
+<p><a name="#_confmain"></a><h5>OpenPIXPDQ Configuration</h5></p>
+
+<p>OpenPIXPDQ requires specific information about the PIX/PDQ server itself as well as the information about the peers in order to properly format the data to accept an incoming request and send a response. This information is configured in XML actor files, and loaded by the configuration loader before the PIX/PDQ server starts. </p>
+
+<p>OpenPIXPDQ have sample configuration files located at conf/mesatests/actors folder, which is located in the root folder of OpenPIXPDQ. These files were successfully used for mesa tests and Connectathon tests. You are free to copy the whole actors folder and create your own configuration files. The actors folder has a bunch of xml configuration files. The starting xml file is IheActors.xml; all the other xml files can be linked from the IheActors.xml. This file contains connections, actors, or files that describe actors or connections. The certs folder under actors contains private key and public certificate used by secure transactions.</p>
+
+<p><a name="#_conffiles"></a><strong>Understand Configuration Files </strong></p>
+
+<p><strong>Tags: </strong></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:11.0pt;color:windowtext;
+font-weight:normal;mso-bidi-font-weight:bold'>Note: The xml syntax including
+tags</span><span lang=EN-GB style='font-size:11.0pt;color:windowtext;
+mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>,</span><span
+lang=EN-GB style='font-size:11.0pt;color:windowtext;font-weight:normal;
+mso-bidi-font-weight:bold'> attributes and elements </span><span lang=EN-GB
+style='font-size:11.0pt;color:windowtext;mso-fareast-language:ZH-CN;font-weight:
+normal;mso-bidi-font-weight:bold'>is</span><span lang=EN-GB style='font-size:
+11.0pt;color:windowtext;font-weight:normal;mso-bidi-font-weight:bold'> all
+case-insensitive. But we will try to be consistent across all the configuration
+files. <o:p></o:p></span></p>
+
+<p><Strong>Configuration Tag:</strong></p>
+
+<p><table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='background:#D9D9D9;border-collapse:collapse;border:none;mso-border-alt:
+ solid windowtext .5pt;mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;
+ mso-border-insideh:.5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td width=127 valign=top style='width:95.4pt;border:solid windowtext 1.0pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext'><strong>Configuration</strong></span>
+  </td>
+  <td width=463 valign=top style='width:347.4pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;font-weight:normal;mso-bidi-font-weight:bold'>Each </span><span
+  lang=EN-GB style='font-size:10.0pt;color:windowtext;mso-fareast-language:
+  ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>XML </span><span
+  lang=EN-GB style='font-size:10.0pt;color:windowtext;font-weight:normal;
+  mso-bidi-font-weight:bold'>configuration file has a root Configuration tag.</span><span
+  lang=EN-GB style='font-size:11.0pt;color:windowtext;mso-fareast-language:
+  ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'><o:p></o:p></span>
+  </td>
+ </tr>
+</table></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+mso-fareast-language:ZH-CN'><strong>ConnectionFile Tag:</strong><o:p></o:p></span></p>
+
+<p><table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=120 valign=top style='width:90.25pt;border:solid windowtext 1.0pt;
+  mso-border-alt:solid windowtext .5pt;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;mso-fareast-language:ZH-CN'><strong>ConnectionFile</strong></span>
+  </td>
+  <td width=470 colspan=2 valign=top style='width:352.55pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;mso-fareast-language:ZH-CN;font-weight:normal;
+  mso-bidi-font-weight:bold'>S</span><span lang=EN-GB style='font-size:10.0pt;
+  color:windowtext;font-weight:normal;mso-bidi-font-weight:bold'>pecifies </span><span
+  lang=EN-GB style='font-size:10.0pt;color:windowtext;mso-fareast-language:
+  ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>a file that defines</span><span
+  lang=EN-GB style='font-size:10.0pt;color:windowtext;font-weight:normal;
+  mso-bidi-font-weight:bold'> standard connection and/or secure connection
+  configuration.</span><span lang=EN-GB style='font-size:11.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'><o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=590 colspan=3 valign=top style='width:6.15in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;mso-fareast-language:ZH-CN;font-weight:normal;
+  mso-bidi-font-weight:bold'>Attributes<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;mso-yfti-lastrow:yes'>
+  <td width=120 valign=top style='width:90.25pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;mso-fareast-language:ZH-CN'><strong>File</strong><o:p></o:p></span>
+  </td>
+  <td width=103 valign=top style='width:77.15pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;mso-fareast-language:ZH-CN;font-weight:normal;
+  mso-bidi-font-weight:bold'>Required<o:p></o:p></span>
+  </td>
+  <td width=367 valign=top style='width:275.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;mso-fareast-language:ZH-CN;font-weight:normal;
+  mso-bidi-font-weight:bold'>The file name of this ConnectionFile.<o:p></o:p></span>
+  </td>
+ </tr>
+</table>
+</p>
+<p>Example:<span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal;mso-bidi-font-weight:bold'>
+&lt;connectionfile file=&quot;AuditRepositoryConnections.xml&quot; /&gt;</span> </p>
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+mso-fareast-language:ZH-CN'><strong>Actor Tag:</strong><o:p></o:p></span></p>
+<p>
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 align=left
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-table-overlap:never;mso-yfti-tbllook:480;mso-table-lspace:9.0pt;
+ margin-left:6.75pt;mso-table-rspace:9.0pt;margin-right:6.75pt;mso-table-anchor-vertical:
+ paragraph;mso-table-anchor-horizontal:column;mso-table-left:left;mso-table-top:
+ .05pt;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=125 valign=top style='width:93.75pt;border:solid windowtext 1.0pt;
+  mso-border-alt:solid windowtext .5pt;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN'><strong>Actor</strong><o:p></o:p></span>
+  </td>
+  <td width=465 colspan=2 valign=top style='width:349.05pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Defines
+  an actor such as PIX Manager, PD Supplier or Secure Node <o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=590 colspan=3 valign=top style='width:6.15in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Attributes<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=125 valign=top style='width:93.75pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN'><strong>Name</strong><o:p></o:p></span>
+  </td>
+  <td width=102 valign=top style='width:76.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Required<o:p></o:p></span>
+  </td>
+  <td width=363 valign=top style='width:272.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>The
+  name of this actor. Any name can be given, but be sure to avoid duplication.<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=125 valign=top style='width:93.75pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN'><strong>Type</strong><o:p></o:p></span>
+  </td>
+  <td width=102 valign=top style='width:76.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Required<o:p></o:p></span>
+  </td>
+  <td width=363 valign=top style='width:272.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Use
+  PixManager for a PIX Manager actor, and PdSupplier for a PD Supplier actor<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=590 colspan=3 valign=top style='width:6.15in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Elements<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=125 valign=top style='width:93.75pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN'><strong>Description</strong></span>
+  </td>
+  <td width=102 valign=top style='width:76.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Optional<o:p></o:p></span>
+  </td>
+  <td width=363 valign=top style='width:272.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>The
+  detailed description of this actor<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td width=125 valign=top style='width:93.75pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN'><strong>Connection</strong><o:p></o:p></span>
+  </td>
+  <td width=102 valign=top style='width:76.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Required<o:p></o:p></span>
+  </td>
+  <td width=363 valign=top style='width:272.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Describes
+  the connection source for this actor.<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7'>
+  <td width=125 valign=top style='width:93.75pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN'><span style='mso-spacerun:yes'>      </span>
+  <strong>-source</strong><o:p></o:p></span>
+  </td>
+  <td width=102 valign=top style='width:76.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Required<o:p></o:p></span>
+  </td>
+  <td width=363 valign=top style='width:272.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>The
+  connection name of this Connection, which has to be defined in one of the
+  Connections.xml files<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:8'>
+  <td width=125 valign=top style='width:93.75pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN'><strong>PixConsumer</strong><o:p></o:p></span>
+  </td>
+  <td width=102 valign=top style='width:76.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Optional<o:p></o:p></span>
+  </td>
+  <td width=363 valign=top style='width:272.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  font-weight:normal;mso-bidi-font-weight:bold'>Describes </span><span
+  lang=EN-GB style='font-size:10.0pt;color:windowtext;mso-fareast-language:
+  ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>a PIX Consumer that
+  subscribes to PIX Update Notification messages. It is applicable to a
+  PixManager actor.<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:9'>
+  <td width=125 valign=top style='width:93.75pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN'><span style='mso-spacerun:yes'>     </span><strong>
+  -connection</strong><o:p></o:p></span>
+  </td>
+  <td width=102 valign=top style='width:76.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Required
+  for PixConsumer<o:p></o:p></span>
+  </td>
+  <td width=363 valign=top style='width:272.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>The
+  connection name of this PIX Consumer, which has to be defined in
+  PixConsumerConnections.xml<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:10'>
+  <td width=125 valign=top style='width:93.75pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN'><strong>XdsRegistry</strong><o:p></o:p></span>
+  </td>
+  <td width=102 valign=top style='width:76.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Optional<o:p></o:p></span>
+  </td>
+  <td width=363 valign=top style='width:272.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Describes
+  a XdsRegistry that accepts PIX Feeds from this PIX Manager. It is applicable
+  to a PixManager actor.<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:11;mso-yfti-lastrow:yes'>
+  <td width=125 valign=top style='width:93.75pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN'><span style='mso-spacerun:yes'>     </span><strong>-
+  connection</strong><o:p></o:p></span>
+  </td>
+  <td width=102 valign=top style='width:76.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Required
+  for XdsRegistry<o:p></o:p></span>
+  </td>
+  <td width=363 valign=top style='width:272.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>The
+  connection name of this XDS Registry. <o:p></o:p></span>
+  </td>
+ </tr>
+</table>
+</p>
+<p class=Contents><span lang=EN-GB style='font-size:11.0pt;color:windowtext;
+mso-fareast-language:ZH-CN'><br clear=all style='mso-special-character:line-break'>
+</span><span lang=EN-GB style='font-size:11.0pt;color:windowtext;mso-fareast-language:
+ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'><o:p></o:p></span></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:11.0pt;color:windowtext;
+mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'><o:p>&nbsp;</o:p></span></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:11.0pt;color:windowtext;
+font-weight:normal;mso-bidi-font-weight:bold'>Ex:</span><span lang=EN-GB
+style='font-size:11.0pt;font-family:"Courier New";color:windowtext;font-weight:
+normal;mso-bidi-font-weight:bold'><span style='mso-spacerun:yes'>  </span></span><span
+lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";color:windowtext;
+font-weight:normal;mso-bidi-font-weight:bold'>&lt;</span><span lang=EN-GB
+style='font-size:10.0pt;font-family:"Courier New";color:windowtext;mso-fareast-language:
+ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>A</span><span lang=EN-GB
+style='font-size:10.0pt;font-family:"Courier New";color:windowtext;font-weight:
+normal;mso-bidi-font-weight:bold'>ctor name=&quot;pixman&quot;
+type=&quot;PixManager&quot;&gt;<o:p></o:p></span></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal;mso-bidi-font-weight:bold'><span
+style='mso-spacerun:yes'>      </span>&lt;</span><span lang=EN-GB
+style='font-size:10.0pt;font-family:"Courier New";color:windowtext;mso-fareast-language:
+ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>D</span><span lang=EN-GB
+style='font-size:10.0pt;font-family:"Courier New";color:windowtext;font-weight:
+normal;mso-bidi-font-weight:bold'>escription&gt;Misys PIX Manager&lt;/</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";color:windowtext;
+mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>D</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";color:windowtext;
+font-weight:normal;mso-bidi-font-weight:bold'>escription&gt;<o:p></o:p></span></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal;mso-bidi-font-weight:bold'><span
+style='mso-spacerun:yes'>      </span>&lt;</span><span lang=EN-GB
+style='font-size:10.0pt;font-family:"Courier New";color:windowtext;mso-fareast-language:
+ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>C</span><span lang=EN-GB
+style='font-size:10.0pt;font-family:"Courier New";color:windowtext;font-weight:
+normal;mso-bidi-font-weight:bold'>onnection
+source=&quot;misys-pix-manager&quot; /&gt;<o:p></o:p></span></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal;mso-bidi-font-weight:bold'><span
+style='mso-spacerun:yes'>    </span>&lt;/</span><span lang=EN-GB
+style='font-size:10.0pt;font-family:"Courier New";color:windowtext;mso-fareast-language:
+ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>A</span><span lang=EN-GB
+style='font-size:10.0pt;font-family:"Courier New";color:windowtext;font-weight:
+normal;mso-bidi-font-weight:bold'>ctor&gt;<o:p></o:p></span></p>
+
+
+<p>Example for IheActors.xml:</p>
+<div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
+mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;
+background:#D9D9D9'>
+<p class=MsoNormal style='margin-top:1.0pt;background:#D9D9D9;border:none;
+mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'><span
+style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'>&lt;Configuration&gt;<o:p></o:p></span>
+<br/>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'> </span>&lt;!--Defines the configuration of Audit
+Repository Server for Audit Client--&gt;<o:p></o:p></span>
+
+<br/>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>  </span>&lt;connectionfile
+file=&quot;AuditRepositoryConnections.xml&quot; /&gt;<o:p></o:p></span>
+<br/>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'> </span>&lt;!--Defines the configuration of local
+system as PD Supplier--&gt;<o:p></o:p></span>
+<br/>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>  </span>&lt;connectionfile
+file=&quot;PdSupplierConnections.xml&quot; /&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'> </span>&lt;!--Defines the configuration of local
+system as PIX Manager--&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>    </span>&lt;connectionfile
+file=&quot;PixManagerConnections.xml&quot; /&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'> </span>&lt;!--Defines the configuration of PIX
+Consumers--&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>    </span>&lt;connectionfile
+file=&quot;PixConsumerConnections.xml&quot; /&gt;<o:p></o:p></span>
+</br></br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>    </span>&lt;!--The PIX Manager actor
+configuration--&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>    </span>&lt;actor name=&quot;pixman&quot;
+type=&quot;PixManager&quot;&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>      </span>&lt;description&gt;Misys PIX
+Manager&lt;/description&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>      </span>&lt;connection
+source=&quot;misys-pix-manager&quot; /&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>      </span>&lt;!--Define 0 or more PIX Consumers
+that subscribe to PIX Update Notification --&gt;<o:p></o:p></span></br>
+
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>      </span>&lt;!-- PixConsumer
+connection=&quot;swpartners&quot; /--&gt;<o:p></o:p></span></br>
+
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>      </span>&lt;!-- PixConsumer
+connection=&quot;tiani-spirit&quot; /--&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-tab-count:1'>      </span>&lt;/actor&gt;<o:p></o:p></span>
+</br></br>
+
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>    </span>&lt;!--The PD Supplier actor
+configuration--&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>    </span>&lt;actor name=&quot;pdsup&quot;
+type=&quot;PdSupplier&quot;&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>      </span>&lt;description&gt;Misys PD
+Supplier&lt;/description&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>      </span>&lt;connection
+source=&quot;misys-pd-supplier&quot; /&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>    </span>&lt;/actor&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'>&lt;/Configuration&gt;<span
+style='mso-spacerun:yes'>     </span><o:p></o:p></span>
+</div>
+
+<p><strong>StandardConnection Tag:</strong></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 align=left
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-table-overlap:never;mso-yfti-tbllook:480;mso-table-lspace:9.0pt;
+ margin-left:6.75pt;mso-table-rspace:9.0pt;margin-right:6.75pt;mso-table-anchor-vertical:
+ paragraph;mso-table-anchor-horizontal:column;mso-table-left:left;mso-table-top:
+ .05pt;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=159 valign=top style='width:119.0pt;border:solid windowtext 1.0pt;
+  mso-border-alt:solid windowtext .5pt;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
+ <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-bidi-font-weight:normal'><strong>StandardConnection</strong></span><span
+  lang=EN-GB style='font-size:10.0pt;color:windowtext;mso-fareast-language:
+  ZH-CN'><o:p></o:p></span>
+  </td>
+  <td width=432 colspan=2 valign=top style='width:323.8pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Defines
+  a non-TLS connection.<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=590 colspan=3 valign=top style='width:6.15in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+ <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Attributes<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=159 valign=top style='width:119.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+ <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;mso-bidi-font-weight:normal'><strong>Name</strong></span>
+  </td>
+  <td width=99 valign=top style='width:74.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Required<o:p></o:p></span>
+  </td>
+  <td width=332 valign=top style='width:249.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>The
+  name of this connection, which must be referenced by the Actors defined in
+  IheActor.xml. <o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=590 colspan=3 valign=top style='width:6.15in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Elements<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=159 valign=top style='width:119.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-bidi-font-weight:normal'><strong>HostName</strong></span>
+  </td>
+  <td width=99 valign=top style='width:74.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Optional
+  for server; required for Client.<o:p></o:p></span>
+  </td>
+  <td width=332 valign=top style='width:249.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>The
+  host name or ip address that this connection connects to.<o:p></o:p></span>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Use
+  localhost if this connection is for a server socket. <o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=159 valign=top style='width:119.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+ <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;mso-bidi-font-weight:normal'><strong>Port</strong><o:p></o:p></span>
+  </td>
+  <td width=99 valign=top style='width:74.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Required<o:p></o:p></span>
+  </td>
+  <td width=332 valign=top style='width:249.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>The
+  port of this connection<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td width=159 valign=top style='width:119.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Contents style='margin-top:6.0pt;mso-element:frame;mso-element-frame-hspace:
+  9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-top:.05pt;mso-height-rule:
+  exactly'><span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-bidi-font-weight:normal'><strong>Identifier</strong></span><span lang=EN-GB
+  style='font-size:11.0pt;color:windowtext;mso-fareast-language:ZH-CN;
+  mso-bidi-font-weight:normal'><o:p></o:p></span></p>
+  <p class=Contents style='margin-top:6.0pt;text-indent:12.0pt;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:column;mso-element-top:.05pt;
+  mso-height-rule:exactly'><span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;mso-bidi-font-weight:normal'>-NamespaceId<o:p></o:p></span></p>
+  <p class=Contents style='margin-top:6.0pt;text-indent:12.0pt;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:column;mso-element-top:.05pt;
+  mso-height-rule:exactly'><span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;mso-bidi-font-weight:normal'>-UniversalId<o:p></o:p></span></p>
+  <p class=Contents style='margin-top:6.0pt;text-indent:12.0pt;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:column;mso-element-top:.05pt;
+  mso-height-rule:exactly'><span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;mso-bidi-font-weight:normal'>-UniversalIdType</span><span
+  lang=EN-GB style='font-size:11.0pt;color:windowtext;mso-fareast-language:
+  ZH-CN'><o:p></o:p></span></p>
+  </td>
+  <td width=99 valign=top style='width:74.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Required<o:p></o:p></span>
+  </td>
+  <td width=332 valign=top style='width:249.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;font-weight:normal'>The identifier tag specifies an assigning authority, or an
+  identity such as ReceivingApplication and
+  ReceivingFacility. It can include 3 elements: NamespaceId, UniversalId and
+  UniversalIdType. There are two ways to specify an Identity: one way is to use
+  NamespceId; the other is to use the combination of UniversalId and
+  UniversalIdType. If both NamespaceId and the combination of UniversalId and
+  UniversalIdType are used, they must be consistent and refer to the same
+  entity. </span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7'>
+  <td width=159 valign=top style='width:119.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;mso-bidi-font-weight:normal'><strong>Property</strong><o:p></o:p></span>
+  </td>
+  <td width=99 valign=top style='width:74.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Required
+  and Optional<o:p></o:p></span>
+  </td>
+  <td width=332 valign=top style='width:249.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;mso-fareast-language:ZH-CN;font-weight:normal'>The
+  Property tag defines a property for this connection.<o:p></o:p></span></br>
+  <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;mso-fareast-language:ZH-CN;font-weight:normal'>There
+  are multiple properties defined for each actor connection. Some are required;
+  some others optional. <o:p></o:p></span></br>
+  <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;mso-fareast-language:ZH-CN;font-weight:normal'>For a PixManager
+  connection, pixManagerAdapter is required, and storeLogger is optional.<o:p></o:p></span></br>
+  <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;mso-fareast-language:ZH-CN;font-weight:normal'>For a PdSupplier
+  connection, pdSupplierAdapter is required, and storeLogger is optional.<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:8'>
+  <td width=159 valign=top style='width:119.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+ <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;mso-bidi-font-weight:normal'><strong>PropertySet</strong><o:p></o:p></span>
+  </td>
+  <td width=99 valign=top style='width:74.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Optional<o:p></o:p></span>
+  </td>
+  <td width=332 valign=top style='width:249.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;mso-fareast-language:ZH-CN;font-weight:normal'>Defines
+  a group of related properties.<o:p></o:p></span></br>
+  <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;mso-fareast-language:ZH-CN;font-weight:normal'>For
+  example, QueryProperties in a PdSupplier connection.<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:9'>
+  <td width=159 valign=top style='width:119.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;mso-bidi-font-weight:normal'><span
+  style='mso-spacerun:yes'></span><strong>-Entry</strong><o:p></o:p></span>
+  </td>
+  <td width=99 valign=top style='width:74.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Optional<o:p></o:p></span>
+  </td>
+  <td width=332 valign=top style='width:249.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;mso-fareast-language:ZH-CN;font-weight:normal'>Each
+  entry defines a specific property for this PropertySet.<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:10;mso-yfti-lastrow:yes'>
+  <td width=159 valign=top style='width:119.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+ <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;mso-bidi-font-weight:normal'><strong>IncludeFile</strong><o:p></o:p></span>
+  </td>
+  <td width=99 valign=top style='width:74.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Optional<o:p></o:p></span>
+  </td>
+  <td width=332 valign=top style='width:249.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:
+  10.0pt;color:windowtext;mso-fareast-language:ZH-CN;font-weight:normal'>This
+  is an inline element. It can be used to place a trunk of properties in a separate
+  xml file. The main purpose of the Include File is to reuse some common configuration</span>
+  </td>
+ </tr>
+</table>
+
+<p class=Contents><span style='font-size:10.0pt;color:windowtext;mso-ansi-language:
+EN-US;mso-fareast-language:ZH-CN'><o:p>&nbsp;</o:p></span></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:11.0pt;color:windowtext;
+mso-fareast-language:ZH-CN'><br clear=all style='mso-special-character:line-break'>
+</span><span lang=EN-GB style='font-size:11.0pt;color:windowtext;mso-fareast-language:
+ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'><o:p></o:p></span></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'><o:p>&nbsp;</o:p></span></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+font-weight:normal'>The following example defines Misys ReceivingApplication</span><span
+style='font-size:11.0pt;color:windowtext;mso-ansi-language:EN-US;mso-fareast-language:
+ZH-CN;mso-bidi-font-weight:normal'><o:p></o:p></span></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal'>&lt;Identifier
+name=&quot;ReceivingApplication&quot;&gt; </span><span lang=EN-GB style='font-size:
+10.0pt;font-family:"Courier New";color:windowtext;mso-fareast-language:ZH-CN;
+font-weight:normal'><span style='mso-spacerun:yes'>       </span><span
+style='mso-spacerun:yes'>  </span><span style='mso-spacerun:yes'>  </span></span><span
+lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";color:windowtext;
+font-weight:normal'>&lt;NamespaceId&gt;PAT_IDENTITY_X_REF_MGR_MISYS&lt;/NamespaceId&gt;<o:p></o:p></span></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal'>&lt;/Identifier&gt;<o:p></o:p></span></p>
+
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+font-weight:normal'>The following example defines a </span><span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+font-weight:normal'>specific domain</span><span lang=EN-GB style='font-size:
+10.0pt;color:windowtext;mso-fareast-language:ZH-CN;font-weight:normal'> (the
+global domain)</span><span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+font-weight:normal'> configuration<o:p></o:p></span></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal'>&lt;Identifier type=&quot;domain&quot;
+name=&quot;GLOBAL&quot;&gt;<o:p></o:p></span></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal'><span style='mso-spacerun:yes'>        
+</span>&lt;NamespaceId&gt;IHENA&lt;/NamespaceId&gt;<o:p></o:p></span></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal'><span style='mso-spacerun:yes'>        
+</span>&lt;UniversalId&gt;1.3.6.1.4.1.21367.2009.1.2.300&lt;/UniversalId&gt;<o:p></o:p></span></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal'><span style='mso-spacerun:yes'>        
+</span>&lt;UniversalIdType&gt;ISO&lt;/UniversalIdType&gt;<o:p></o:p></span></p>
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal'>&lt;/Identifier&gt;</span><span
+lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";color:windowtext;
+mso-fareast-language:ZH-CN;font-weight:normal'><o:p></o:p></span></p>
+
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+mso-fareast-language:ZH-CN;font-weight:normal'>The following example defines an
+IncludeFile.<o:p></o:p></span></p>
+
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;mso-bidi-font-size:
+18.0pt;color:windowtext;font-weight:normal'>Ex: </span><span lang=EN-GB
+style='font-size:11.0pt;mso-bidi-font-size:18.0pt;font-family:"Courier New";
+color:windowtext;font-weight:normal'>&lt;includefile
+name=&quot;PixPdqClientDomains.xml&quot; /&gt;<o:p></o:p></span></p>
+
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+font-weight:normal'>The above example means that the Content of
+PixPdqClientDomains.xml can be used to replace this tag. <o:p></o:p></span></p>
+
+
+<p class=Contents><span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+font-weight:normal'>Example for PixManagerConnections.xml<o:p></o:p></span></p>
+
+
+<div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
+mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;
+background:#D9D9D9'>
+
+<p class=MsoNormal style='margin-top:1.0pt;background:#D9D9D9;border:none;
+mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'><span
+style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'>&lt;Configuration&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>    </span>&lt;standardconnection
+name=&quot;misys-pix-manager&quot;&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        </span>&lt;!--The host name of the PIX Manager
+Server--&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>       
+</span>&lt;hostname&gt;localhost&lt;/hostname&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        </span>&lt;!--The port for PIX Query
+transaction--&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        </span>&lt;port&gt;3600&lt;/port&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        </span>&lt;Identifier
+name=&quot;ReceivingApplication&quot;&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>           
+</span>&lt;NamespaceId&gt;PAT_IDENTITY_X_REF_MGR_MISYS&lt;/NamespaceId&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>            </span>&lt;!--
+NamespaceId&gt;MESA_XREF&lt;/NamespaceId--&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        </span>&lt;/Identifier&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        </span>&lt;Identifier
+name=&quot;ReceivingFacility&quot;&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>           
+</span>&lt;NamespaceId&gt;ALLSCRIPTS&lt;/NamespaceId&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>            </span>&lt;!--
+NamespaceId&gt;XYZ_HOSPITAL&lt;/NamespaceId--&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        </span>&lt;/Identifier&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>     </span><o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        </span>&lt;!-- If test is true, it will by
+pass some receiving application<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>            </span><span
+style='mso-spacerun:yes'> </span>and receiving facility validation --&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        </span>&lt;Property name=&quot;test&quot;
+value=&quot;true&quot;/&gt;<o:p></o:p></span>
+</br>
+</br>
+
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        </span>&lt;!-- pixManagerAdapter - required :<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>            </span>The java adapter class that
+provides the patient data source for this Pix Manager (required).<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>            </span>This class must implement
+org.openhealthexchange.openpixpdq.ihe.IPixManagerAdapter --&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>         </span>&lt;Property
+name=&quot;pixManagerAdapter&quot;
+value=&quot;org.openhealthexchange.pixpdqadapter.openempi.PixManagerAdapter&quot;
+/&gt;<span style='mso-spacerun:yes'>  </span><o:p></o:p></span>
+</br>
+</br>
+
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        </span>&lt;!-- storeLogger - optional :<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>            </span>The java adapter class that
+persists messages of this Pix Manager (optional).<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>            </span>This class must implement
+org.openhealthexchange.openpixpdq.ihe.log.IMessageStoreLogger --&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>         </span>&lt;Property
+name=&quot;storeLogger&quot; value=&quot;org.openhealthexchange.messagestore.service.MessageStoreService&quot;
+/&gt;<span style='mso-spacerun:yes'>  </span><o:p></o:p></span>
+</br>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        </span>&lt;!-- Configuration file for each
+client domains --&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-tab-count:1'>      </span><span style='mso-spacerun:yes'>   
+</span>&lt;includefile name=&quot;PixPdqClientDomains.xml&quot; /&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>    </span>&lt;/standardconnection&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'>&lt;/Configuration&gt;</span><span
+style='font-size:10.0pt;mso-bidi-font-size:8.0pt;font-family:"Courier New";
+mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span>
+</p>
+</div>
+
+<p>Example for PixPdqClientDomains.xml</p>
+
+<div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
+mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;
+background:#D9D9D9'>
+
+<p class=MsoNormal style='margin-top:1.0pt;background:#D9D9D9;border:none;
+mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'><span
+style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'>&lt;Configuration&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>     </span>&lt;!--To configure each PIX/PDQ client,
+always use type=&quot;domain&quot; --&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>     </span>&lt;Identifier type=&quot;domain&quot;
+name=&quot;HIMSS2005&quot;&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        
+</span>&lt;NamespaceId&gt;HIMSS2005&lt;/NamespaceId&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        
+</span>&lt;UniversalId&gt;1.3.6.1.4.1.21367.2005.1.1&lt;/UniversalId&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>         </span>&lt;UniversalIdType&gt;ISO&lt;/UniversalIdType&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>     </span>&lt;/Identifier&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>     </span>&lt;Identifier type=&quot;domain&quot;
+name=&quot;XREF2005&quot;&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        
+</span>&lt;NamespaceId&gt;XREF2005&lt;/NamespaceId&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        
+</span>&lt;UniversalId&gt;1.3.6.1.4.1.21367.2005.1.2&lt;/UniversalId&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        
+</span>&lt;UniversalIdType&gt;ISO&lt;/UniversalIdType&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>     </span>&lt;/Identifier&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>  </span><span
+style='mso-spacerun:yes'>   </span>&lt;Identifier type=&quot;domain&quot;
+name=&quot;NIST&quot;&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        
+</span>&lt;NamespaceId&gt;NIST&lt;/NamespaceId&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        
+</span>&lt;UniversalId&gt;1.3.6.1.4.1.21367.2005.3.7&lt;/UniversalId&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        
+</span>&lt;UniversalIdType&gt;ISO&lt;/UniversalIdType&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>     </span>&lt;/Identifier&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>     </span>&lt;Identifier type=&quot;domain&quot;
+name=&quot;Master&quot;&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        
+</span>&lt;NamespaceId&gt;IHENA&lt;/NamespaceId&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        
+</span>&lt;UniversalId&gt;1.3.6.1.4.1.21367.2009.1.2.300&lt;/UniversalId&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        
+</span>&lt;UniversalIdType&gt;ISO&lt;/UniversalIdType&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>     </span>&lt;/Identifier&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>     </span>&lt;Identifier type=&quot;domain&quot;
+name=&quot;IHE Local&quot;&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>         </span>&lt;NamespaceId&gt;IHELOCAL&lt;/NamespaceId&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        
+</span>&lt;UniversalId&gt;1.3.6.1.4.1.21367.2009.1.2.310&lt;/UniversalId&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>        
+</span>&lt;UniversalIdType&gt;ISO&lt;/UniversalIdType&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>     </span>&lt;/Identifier&gt;<o:p></o:p></span>
+</br>
+<span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman"'>&lt;/Configuration&gt;<o:p></o:p></span></p>
+
+</div>
+
+<p class=Contents><span lang=EN-GB style='font-size:11.0pt;color:windowtext;
+mso-fareast-language:ZH-CN;mso-bidi-font-weight:normal'><strong>SecureConnection Tag:</strong><o:p></o:p></span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 align=left
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-table-overlap:never;mso-yfti-tbllook:480;mso-table-lspace:9.0pt;
+ margin-left:6.75pt;mso-table-rspace:9.0pt;margin-right:6.75pt;mso-table-anchor-vertical:
+ paragraph;mso-table-anchor-horizontal:column;mso-table-left:left;mso-table-top:
+ .05pt;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=159 valign=top style='width:119.0pt;border:solid windowtext 1.0pt;
+  mso-border-alt:solid windowtext .5pt;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-bidi-font-weight:normal'><strong>SecureConnection</strong></span>
+  </td>
+  <td width=432 colspan=2 valign=top style='width:323.8pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Defines
+  a TLS connection. <o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=590 colspan=3 valign=top style='width:6.15in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>It
+  has the same attributes and elements as the corresponding StandardConnection.
+  In addition, a SecureConnection must include the following additional Elements:<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=159 valign=top style='width:119.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;mso-bidi-font-weight:normal'><strong>KeyStore</strong></span>
+  </td>
+  <td width=99 valign=top style='width:74.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Required<o:p></o:p></span>
+  </td>
+  <td width=332 valign=top style='width:249.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>The
+  file containing the Key Store for this connection. By default, it is in the certs
+  folder.<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=159 valign=top style='width:119.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;mso-bidi-font-weight:normal'><strong>KeyPass</strong><o:p></o:p></span>
+  </td>
+  <td width=99 valign=top style='width:74.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Required
+  <o:p></o:p></span>
+  </td>
+  <td width=332 valign=top style='width:249.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>The
+  password for the Key Store.<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=159 valign=top style='width:119.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+ <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;mso-bidi-font-weight:normal'><strong>TrustStore</strong><o:p></o:p></span>
+  </td>
+  <td width=99 valign=top style='width:74.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Required
+  <o:p></o:p></span>
+  </td>
+  <td width=332 valign=top style='width:249.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>The
+  file containing the Trust Store for this connection. By default, it is in the
+  certs folder.<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+  <td width=159 valign=top style='width:119.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;mso-bidi-font-weight:normal'><strong>TrustPass</strong><o:p></o:p></span>
+  </td>
+  <td width=99 valign=top style='width:74.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>Required
+  <o:p></o:p></span>
+  </td>
+  <td width=332 valign=top style='width:249.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span lang=EN-GB style='font-size:10.0pt;color:windowtext;
+  mso-fareast-language:ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'>The
+  password for the Trust Store.<o:p></o:p></span>
+  </td>
+ </tr>
+</table>
+
+
+
+<p class=Contents><span lang=EN-GB style='font-size:11.0pt;color:windowtext;
+mso-fareast-language:ZH-CN'><br clear=all style='mso-special-character:line-break'>
+</span><span lang=EN-GB style='font-size:11.0pt;color:windowtext;mso-fareast-language:
+ZH-CN;font-weight:normal;mso-bidi-font-weight:bold'><o:p></o:p></span></p>
+
+<p class=Contents><span style='font-size:11.0pt;color:windowtext;mso-ansi-language:
+EN-US;mso-fareast-language:ZH-CN'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-GB style='font-size:11.0pt;mso-ansi-language:
+EN-GB'>Example for </span><span lang=EN-GB style='font-size:10.0pt;mso-fareast-font-family:
+SimSun;mso-ansi-language:EN-GB;mso-fareast-language:ZH-CN'>Trust and KeyStore
+in SecureConnection tag.<o:p></o:p></span></p>
+
+
+<div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
+mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;
+background:#D9D9D9'>
+
+<p class=MsoNormal style='margin-top:1.0pt;background:#D9D9D9;border:none;
+mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'><span
+lang=EN-GB style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:
+SimSun;mso-fareast-language:ZH-CN'><span style='mso-spacerun:yes'> </span></span><span
+style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:SimSun;
+mso-fareast-language:ZH-CN'>&lt;!-- Trust and Keystore --&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-top:1.0pt;background:#D9D9D9;border:none;
+mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'><span
+style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:SimSun;
+mso-fareast-language:ZH-CN'><span style='mso-spacerun:yes'> </span>&lt;!-- Used
+by Connectathon 2009 --&gt; <o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-top:1.0pt;background:#D9D9D9;border:none;
+mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'><span
+style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:SimSun;
+mso-fareast-language:ZH-CN'><span style='mso-spacerun:yes'> </span>&lt;KeyStore&gt;certs/OpenPIXPDQ_2009_KEY.p12&lt;/KeyStore&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-top:1.0pt;background:#D9D9D9;border:none;
+mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'><span
+style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:SimSun;
+mso-fareast-language:ZH-CN'><span style='mso-spacerun:yes'> </span>&lt;KeyPass&gt;password&lt;/KeyPass&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-top:1.0pt;background:#D9D9D9;border:none;
+mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'><span
+style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:SimSun;
+mso-fareast-language:ZH-CN'><span style='mso-spacerun:yes'> </span>&lt;TrustStore&gt;certs/OpenPIXPDQ_2009_STORE.jks&lt;/TrustStore&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-top:1.0pt;background:#D9D9D9;border:none;
+mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'><span
+style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:SimSun;
+mso-fareast-language:ZH-CN'><span style='mso-spacerun:yes'> </span>&lt;TrustPass&gt;password&lt;/TrustPass&gt;<o:p></o:p></span></p>
+
+</div>
+<p><a name="#_ui"></a><h5>OpenPIXPDQ UI</h5></p>
+<p>OpenPIXPDQ UI has five pages of different purpose. </P>
+<p><strong>Registration:</strong> Registration page is used to register a patient.</p>
+<img alt="Registration" width=576 height=349 src="images/image002.jpg"/>
+<p><strong>Demographic Query: </strong>used to query patients using demographics. As a result this page displays all matched patients with the given demographics.</p>
+<img alt="Demographic Query" width=575 height=328 src="images/image004.jpg" />
+<p><strong>Pix Query:  </strong>Used to query a patient with Patient ID and Assigning Authority.</p>
+<img alt="Pix Query" width=576 height=312 src="images/image006.jpg" />
+<p><strong>Configuration:  </strong>Used to load actors and start/stop the servers.</p>
+<img alt="Configuration" width=576 height=312 src="images/image008.jpg" />
+<p><strong>Message Log:  </strong>Used to search for the all audit information. </p>
+<img alt="Message Log" width=576 height=311 src="images/image010.jpg" />
+		</div>
+	</div>
+</body>
+</html>

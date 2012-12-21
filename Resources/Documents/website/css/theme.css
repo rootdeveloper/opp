@@ -1,0 +1,111 @@
+body {
+padding:0 0 10px;
+}
+body, td, select, input, li {
+font-family:Verdana,Helvetica,Arial,sans-serif;
+font-size:13px;
+}
+code {
+font-family:Courier,monospace;
+font-size:13px;
+}
+a {
+text-decoration:none;
+}
+a:link {
+color:#3366AA;
+}
+a:visited {
+color:#4477AA;
+}
+a:active, a:hover {
+color:#6699CC;
+}
+h2 {
+background-color:#DDDDDD;
+border:1px solid #999999;
+color:#990000;
+font-size:x-large;
+font-weight:900;
+padding:4px 4px 4px 6px;
+}
+h3 {
+background-color:#EEEEEE;
+border:1px solid #AAAAAA;
+color:#990000;
+font-size:medium;
+font-weight:900;
+padding:4px 4px 4px 6px;
+}
+h4 {
+background-color:#FFFFFF;
+border:1px solid #BBBBBB;
+color:#990000;
+font-size:large;
+font-weight:normal;
+padding:4px 4px 4px 6px;
+}
+h5 {
+color:#990000;
+padding:2px 2px 2px 2px;
+}
+p {
+font-size:small;
+line-height:1.3em;
+padding-left:20px;
+}
+
+#breadcrumbs {
+background-color:#CCCCCC;
+border-bottom:1px solid #AAAAAA;
+border-top:0px solid #AAAAAA;
+}
+#leftColumn {
+background-color:#EEEEEE;
+border:1px solid #999999;
+margin:10px 0 0 5px;
+}
+#navcolumn h5 {
+border-bottom:1px solid #AAAAAA;
+color:#000000;
+font-size:smaller;
+padding-top:2px;
+}
+table.bodyTable th {
+background-color:#BBBBBB;
+color:white;
+font-weight:bold;
+text-align:left;
+}
+table.bodyTable th, table.bodyTable td {
+font-size:1em;
+}
+table.bodyTable tr.a {
+background-color:#DDDDDD;
+}
+table.bodyTable tr.b {
+background-color:#EEEEEE;
+}
+.source {
+border:1px solid #999999;
+}
+dl {
+background-color:#FFFFCC;
+border:1px solid #AAAAAA;
+padding:4px 4px 4px 6px;
+}
+dt {
+color:#990000;
+}
+#organizationLogo img, #projectLogo img, #projectLogo span {
+margin:8px;
+}
+#banner {
+padding-bottom:20px;
+padding-left:10px;
+border-bottom:0px solid #FFFFFF;
+background-color:#CCCCCC;
+}
+#contentBox p{
+font-size: samller;
+}

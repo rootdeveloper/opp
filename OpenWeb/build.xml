@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="install" name="OpenWeb">
+	<property file="build.properties" />
+	<property name="web.src" location="src" />
+	<property name="web.dir" location="web" />
+	<property name="web.descriptor.dir" location="web/WEB-INF" />
+	<property name="lib.src" location="web/WEB-INF/lib" />
+	<property name="build.root" location="build" />
+	<property name="build.web" location="${build.root}/web" />
+	<property name="build.web.classes" location="${build.web}/WEB-INF/classes" />
+	<property name="build.web.lib" location="${build.web}/WEB-INF/lib" />
+	<property name="dist.root" location="dist" />
+	<property name="install.app.dir" location="${jboss.home}/server/default/deploy" />
+	<property name="openpixpdq.build" location="${openpixpdq.root}/build.xml" />
+	<property name="openpixpdq.dist.dir" location="${openpixpdq.root}/dist" />
+	<property name="openpixpdq.lib.dir" location="${openpixpdq.root}/lib" />
+	<property name="openempiadapter.build" location="${openempiadapter.root}/build.xml" />
+	<property name="openempiadapter.dist.dir" location="${openempiadapter.root}/dist" />
+	
+	<target name="clean" description="Clean out compiled src">
+		<!-- Remove build/* -->
+		<delete failonerror="false" quiet="true" includeEmptyDirs="true">
+			<fileset dir="${build.root}" />
+		</delete>
+	</target>
+
+	<target name="compile" depends="setClasspath">
+		<javac failonerror="true" debug="off" srcdir="${web.src}" destdir="${build.web.classes}" classpath="${classpath}" />
+	</target>
+
+	<target name="setClasspath">
+		<property environment="env" />
+		<path id="build.classpath">
+			<fileset dir="${lib.src}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${openpixpdq.dist.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${openpixpdq.lib.dir}/">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		<property name="classpath" refid="build.classpath" />
+		<echo message="Classpath Settings done: ${classpath}" />
+	</target>
+
+	<target name="debug" depends="-init" unless="built" description="Buid with debug flags">
+
+		<antcall target="compile" inheritAll="true" inheritRefs="true">
+			<param name="optimize" value="false" />
+			<param name="debug" value="true" />
+		</antcall>
+		<property name="built" value="true" />
+
+		<!-- Copy web source configuration files -->
+		<copy todir="${build.web.classes}">
+			<fileset dir="${web.src}" excludes="${to.exclude}"/>
+		</copy>
+
+		<!-- Copy web application files -->
+		<copy todir="${build.web}">
+			<fileset dir="${web.dir}" />
+		</copy>
+		
+		<!-- Copy lib from OpenEmpiAdapter -->
+		<copy todir="${build.web.lib}">
+			<fileset file="${openempiadapter.dist.dir}/*.jar" />
+		</copy>
+		<!-- Copy libraries from OpenPIXPDQ -->
+		<copy todir="${build.web.lib}">
+			<fileset file="${openpixpdq.dist.dir}/*.jar" />
+			<fileset dir="${openpixpdq.lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${openpixpdq.lib.dir}/apache-commons">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${openpixpdq.lib.dir}/axis2-1.3">
+				<include name="*.jar" />
+			</fileset>
+			<!--fileset dir="${openpixpdq.lib.dir}/beepcore">
+				<include name="*.jar" />
+			</fileset-->
+			<fileset dir="${openpixpdq.lib.dir}/braid">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${openpixpdq.lib.dir}/jaxb">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+
+	</target>
+
+	<target name="-init" depends="clean" unless="initted">
+
+		<property name="initted" value="true" />
+
+		<mkdir dir="${build.root}"/>
+		<mkdir dir="${build.web.classes}"/>
+		<mkdir dir="${dist.root}"/>
+
+	</target>
+
+	<target name="-generate-war" depends="debug">
+		<war destfile="${dist.root}/${war.name}" webxml="${web.descriptor.dir}\web.xml" update="true">
+			<fileset dir="${build.web}"/>
+			<!--classes dir="${build.web.classes}"/-->
+		</war>
+		<!--delete dir="${build.root}"/-->
+	</target>
+
+	<target name="install" depends="openpixpdq,-generate-war" description="Installs application in the domain">		
+		<copy overwrite="${FORCE}" todir="${install.app.dir}">
+			<fileset file="${dist.root}/${war.name}" />
+		</copy>
+
+	</target>
+	<target name="openpixpdq">
+		 <ant antfile="${openpixpdq.build}" target="Jar" inheritall="false"/>
+		 <ant antfile="${openempiadapter.build}" target="Jar" inheritall="false"/>
+	</target>
+</project>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="Jar" name="OpenEmpiAdapter">
+	<property file="build.properties" />
+	<property name="build.root" location="temp" />
+	<property name="dist.root" location="dist" />
+	<property name="lib.src" location="lib" />
+	<property name="src.dir" location="src/java" />
+
+	<target name="clean" description="Clean out compiled src">
+		<!-- Remove build/* -->
+		<delete failonerror="false" quiet="true" includeEmptyDirs="true">
+			<fileset dir="${dist.root}" />
+		</delete>
+	</target>
+
+	<target name="compile" depends="setClasspath">
+		<javac failonerror="true" debug="true" srcdir="${src.dir}" destdir="${build.root}" classpath="${classpath}" />
+	</target>
+
+	<target name="setClasspath">
+		<property environment="env" />
+		<path id="build.classpath">
+			<fileset dir="${lib.src}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		<property name="classpath" refid="build.classpath" />
+		<echo message="Classpath Settings done: ${classpath}" />
+	</target>
+
+	<target name="debug" depends="-init" unless="built" description="Buid with debug flags">
+
+		<antcall target="compile" inheritAll="true" inheritRefs="true">
+			<param name="optimize" value="false" />
+			<param name="debug" value="true" />
+		</antcall>
+		<property name="built" value="true" />
+
+	</target>
+
+	<target name="-init" unless="initted">
+
+		<property name="initted" value="true" />
+
+		<mkdir dir="${build.root}" />
+		<mkdir dir="${dist.root}" />
+	</target>
+
+	<target name="Jar" depends="debug" description="generate Util jar file">
+
+		<!-- Create destination directory for jar file -->
+		<jar jarfile="${dist.root}/${jar.name}" basedir="${build.root}" excludes="${to.exclude}" />
+		<echo message="Jar Created [${dist.root}/${jar.name}]" />
+		<echo message="Deleting temporary directory:[${build.root}]" />
+		<delete dir="${build.root}" />
+
+	</target>
+</project>

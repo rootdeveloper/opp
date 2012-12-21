@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="OpenPIXPDQ">
+        <wb-resource deploy-path="/" source-path="/src/java"/>
+        <wb-resource deploy-path="/" source-path="/conf"/>
+        <wb-resource deploy-path="/" source-path="/src/mesatests"/>
+        <wb-resource deploy-path="/" source-path="/src/test"/>
+        <wb-resource deploy-path="/" source-path="/data"/>
+    </wb-module>
+</project-modules>

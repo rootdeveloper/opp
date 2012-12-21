@@ -1,0 +1,151 @@
+ 
+body {
+margin:0;
+padding:0;
+}
+img {
+border:medium none;
+}
+table {
+margin-left:-2px;
+margin-right:-2px;
+padding:0;
+width:100%;
+}
+acronym {
+border-bottom:1px dotted #FFEEBB;
+cursor:help;
+}
+table.bodyTable th, table.bodyTable td {
+padding:2px 4px;
+vertical-align:top;
+}
+div.clear {
+clear:both;
+visibility:hidden;
+}
+div.clear hr {
+display:none;
+}
+#bannerLeft, #bannerRight {
+font-size:xx-large;
+font-weight:bold;
+}
+#bannerLeft img, #bannerRight img {
+margin:0;
+}
+.xleft, #bannerLeft img {
+float:left;
+}
+.xright, #bannerRight img {
+float:right;
+}
+#banner {
+padding:0;
+}
+#banner img {
+border:medium none;
+}
+#breadcrumbs {
+padding:3px 10px;
+}
+#leftColumn {
+float:left;
+overflow:auto;
+width:185px;
+}
+#bodyColumn {
+margin-left:197px;
+margin-right:1.5em;
+}
+#legend {
+padding:8px 0;
+}
+#navcolumn {
+padding:8px 4px 0 8px;
+}
+#navcolumn h5 {
+font-size:small;
+margin:0;
+padding:0;
+}
+#navcolumn ul {
+font-size:small;
+margin:0;
+padding:0;
+}
+#navcolumn li {
+background-image:none;
+background-position:0 0.4em;
+background-repeat:no-repeat;
+font-size:smaller;
+line-height:1.2em;
+list-style-position:outside;
+list-style-type:none;
+padding-left:16px;
+}
+#poweredBy {
+text-align:center;
+}
+#navcolumn img {
+margin-bottom:3px;
+margin-top:10px;
+}
+#poweredBy img {
+border:1px solid black;
+display:block;
+height:30px;
+margin:20px 0 20px 17px;
+width:90px;
+
+}
+#search img {
+display:block;
+margin:0;
+}
+#search #q, #search #btnG {
+border:1px solid #999999;
+margin-bottom:10px;
+}
+#search form {
+margin:0;
+}
+#lastPublished {
+font-size:x-small;
+}
+.navSection {
+margin-bottom:2px;
+padding:8px;
+}
+.navSectionHead {
+font-size:x-small;
+font-weight:bold;
+}
+.section {
+padding:4px;
+}
+.section a{
+line-height:1.3em;
+}
+#contents li {  
+ list-style-type:none;    
+}
+#footer {
+font-size:x-small;
+padding:3px 10px;
+}
+#breadcrumbs {
+font-size:x-small;
+margin:0;
+}
+.source {
+margin:1em 7px;
+padding:12px;
+}
+.source pre {
+margin:0;
+padding:0;
+}
+#object {
+width:100%;
+}

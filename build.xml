@@ -1,0 +1,208 @@
+<project name="OpenPIXPDQ-root" default="openpixpdq-zip-tar" basedir=".">
+
+	<!-- set global properties for this build -->
+	<property name="project" value="openpixpdq" />
+	<property name="version" value="1.0" />
+	<property name="final.name" value="${project}-${version}" />
+	<property name="zipfilename" value="${final.name}.zip"/>
+	<property name="tarfilename" value="${final.name}.tar.gz"/>
+	<property name="source.zipfilename" value="${final.name}-source.zip"/>
+	<property name="source.tarfilename" value="${final.name}-source.tar.gz"/>
+	<property name="jarname" value="openpixpdq.jar"/>
+	<property name="earname" value="openempi.ear"/>
+	<property name="openpixpdq.dir" value="OpenPIXPDQ"/>
+	<property name="openweb.dir" value="OpenWeb" />
+	<property name="adapter.dir" value="OpenEmpiAdapter" />
+	<property name="resorces.dir" value="Resources" />
+	<property name="build" location="build"/>
+	<property name="build.openpixpdq.dir" value="${build}/openpixpdq-1.0" />
+	<property name="build.openempi.dir" value="${build}/openempi" />
+	<property name="build.openpixpdq.conf.dir" value="${build.openpixpdq.dir}/conf" />
+	<property name="build.openpixpdq.data.dir" value="${build.openpixpdq.dir}/data" />
+	<property name="build.openpixpdq.lib.dir" value="${build.openpixpdq.dir}/lib" />
+	<property name="build.openpixpdq.licenses.dir" value="${build.openpixpdq.dir}/licenses" />
+	<property name="buildsorce" location="temp"/>
+
+	<target name="build" depends="clean" description="build the software">
+		<!-- make directories -->
+		<mkdir dir="${build.openempi.dir}"/>
+		<mkdir dir="${build.openpixpdq.dir}"/>
+		<mkdir dir="${build.openpixpdq.lib.dir}"/>
+		<mkdir dir="${build.openpixpdq.conf.dir}"/>
+		<mkdir dir="${build.openpixpdq.data.dir}"/>
+		<mkdir dir="${build.openpixpdq.licenses.dir}"/>
+
+		<!-- call OpenWeb build.xml to build openpixpdq.war -->
+		<ant antfile="${openweb.dir}/build.xml" target="install" inheritall="false"/>
+
+		<!-- copy openpixpdq.war, openpixpdq.jar to the build directory -->
+		<copy todir="${build.openpixpdq.dir}">
+			<fileset dir="${openweb.dir}/dist">
+				<include name="**/*.war"/>
+			</fileset>
+			<fileset dir="${openpixpdq.dir}/dist">
+				<include name="**/*.jar"/>
+			</fileset>
+			<fileset dir="${adapter.dir}/dist">
+				<include name="**/*.jar"/>
+			</fileset>
+		</copy>
+
+		<!-- copy openempi.ear and conf files to build/OpenEMPI directory-->
+		<copy todir="${build.openempi.dir}">
+			<fileset dir="${resorces.dir}/OpenEMPI">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+
+		<!-- copy openpixpdq library to build lib directory-->
+		<copy todir="${build.openpixpdq.lib.dir}">
+			<fileset dir="${openpixpdq.dir}/lib">
+				<include name="**/*.jar"/>
+			</fileset>
+			<fileset dir="${adapter.dir}/lib">
+				<include name="**/*.jar" />
+				<exclude name="openpixpdq*.jar"/>
+				<exclude name="braid*.jar"/>
+			</fileset>
+		</copy>
+
+		<!-- copy openpixpdq configuration files to build conf directory-->
+		<copy todir="${build.openpixpdq.conf.dir}">
+			<fileset dir="${openpixpdq.dir}/conf">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+
+		<!-- copy openpixpdq data file to build data directory-->
+		<copy todir="${build.openpixpdq.data.dir}">
+			<fileset dir="${openpixpdq.dir}/data">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+
+		<!-- copy openpixpdq licences to build licences directory-->
+		<copy todir="${build.openpixpdq.licenses.dir}">
+			<fileset dir="${openpixpdq.dir}/licenses">
+				<include name="**/*"/>
+			</fileset>
+			<fileset dir="${openweb.dir}/licenses">
+				<include name="**/*"/>
+			</fileset>
+			<fileset dir="${adapter.dir}/licenses">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+
+		<!-- copy README, LICENSE, NOTICE files to build directory-->
+		<copy todir="${build}">
+			<fileset dir=".">
+				<include name="*.txt"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="build.source">
+
+		<!-- make directories -->
+		<mkdir dir="${buildsorce}/${openpixpdq.dir}" />
+		<mkdir dir="${buildsorce}/${openweb.dir}" />
+		<mkdir dir="${buildsorce}/${adapter.dir}" />
+
+		<!-- copy openpixpdq src,lib,conf,licences and build files to build directory-->
+		<copy todir="${buildsorce}/${openpixpdq.dir}">
+			<fileset dir="${openpixpdq.dir}">
+				<include name="build.*" />
+				<include name="src/" />
+				<include name="lib/" />
+				<include name="conf/" />
+				<include name="licenses/" />
+			</fileset>
+		</copy>
+
+		<!-- copy openweb src,web,licences and build files to build directory-->
+		<copy todir="${buildsorce}/OpenWeb">
+			<fileset dir="${openweb.dir}">
+				<include name="build.*" />
+				<include name="src/" />
+				<include name="Web/" />
+				<include name="licenses/" />
+			</fileset>
+		</copy>
+
+		<!-- copy openempiadapter src,lib,licences and build files to build directory-->
+		<copy todir="${buildsorce}/${adapter.dir}">
+			<fileset dir="${adapter.dir}">
+				<include name="build.*" />
+				<include name="src/" />
+				<include name="lib/" />
+				<include name="licenses/" />
+			</fileset>
+		</copy>
+
+		<!-- copy README, LICENSE, NOTICE files to build directory-->
+		<copy todir="${buildsorce}">
+			<fileset dir=".">
+				<include name="*.txt" />
+			</fileset>
+		</copy>
+
+	</target>
+
+
+	<!-- Packages the openpixpdq project in zip format -->
+	<target name="package-openpixpdq-zip" depends="build">
+		<zip zipfile="${zipfilename}" >
+			<zipfileset dir="${build}">
+				<include name="**/*"/>
+			</zipfileset>
+		</zip>
+	</target>
+
+	<!-- Packages the openpixpdq project in tar format -->
+	<target name="package-openpixpdq-tgz">
+		<tar longfile="gnu" compression="gzip" tarfile="${tarfilename}">
+			<tarfileset dir="${build}">
+				<include name="**/*"/>
+			</tarfileset>
+		</tar>
+	</target>
+
+	<!-- Packages the openpixpdq project source in zip format -->
+	<target name="package-openpixpdq-source-zip" depends="build.source">
+		<zip zipfile="${source.zipfilename}">
+			<zipfileset dir="${buildsorce}">
+				<include name="**/*" />
+			</zipfileset>
+		</zip>
+	</target>
+
+	<!-- Packages the openpixpdq project source in tar format -->
+	<target name="package-openpixpdq-source-tgz" depends="build.source">
+		<zip zipfile="${source.tarfilename}">
+			<zipfileset dir="${buildsorce}">
+				<include name="**/*"/>
+			</zipfileset>
+		</zip>
+	</target>
+	<!-- clean up the build folder -->
+	<target name="clean" description="clean up" >
+		<delete dir="${build}"/>
+		<delete dir="${buildsorce}"/>
+	</target>
+
+	<target name="openpixpdq-zip-tar">
+		
+		<antcall target="package-openpixpdq-zip">
+		</antcall>
+		<antcall target="package-openpixpdq-tgz">
+		</antcall>
+		<antcall target="package-openpixpdq-source-zip">
+		</antcall>
+		<antcall target="package-openpixpdq-source-tgz">
+		</antcall>
+		<antcall target="clean">
+		</antcall>
+
+	</target>
+</project>

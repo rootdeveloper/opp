@@ -1,0 +1,6 @@
+OpenPIXPDQ
+Copyright 2009 Misys PLC 
+
+This product includes software developed by
+Misys PLC (http://www.misys.com/). 
+

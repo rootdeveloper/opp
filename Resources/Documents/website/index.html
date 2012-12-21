@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+  <head>
+    <title>OpenPIXPDQ</title>
+    <style type="text/css" media="all">
+      @import url("./css/base.css");
+      @import url("./css/theme.css");
+      @import url("./css/site.css");
+    </style>	
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />        
+   </head>
+  <body class="composite">
+    <div id="banner">
+        <a href="" id="bannerLeft">    
+            <font size="5"> OpenPIXPDQ</font>
+        </a>                      
+		<div class="clear">
+			<hr/>
+		</div>
+    </div>
+    <div id="breadcrumbs">
+		<div class="xright">   
+			<a href="http://www.ihe.net/Technical_Framework/index.cfm#IT" target="_blank">IHE Profiles</a>|			
+			<a href="http://misys.com/corp/OpenSource/" target="_blank">Misys OpenSource</a>  
+		</div>
+		<div class="clear">
+			<hr/>
+		</div>
+    </div>
+    <div id="leftColumn">
+		<div id="navcolumn">
+		<h5>Welcome</h5>
+		<ul>                      
+			<li class="none">
+              <strong>Overview</strong>
+			</li>              
+			<li class="none">
+              <a href="news.html">News</a>
+			</li>
+        </ul>
+        <h5>OpenPIXPDQ</h5>
+        <ul>              
+			<li class="none">
+              <a href="https://sourceforge.net/project/showfiles.php?group_id=241607">Download</a>
+			</li>              
+			<li class="none">
+              <a href="javadoc/index.html">JavaDocs (API)</a>
+			</li>              
+        </ul>
+        <h5>Developer Guides</h5>
+        <ul>              
+			<li class="none">
+              <a href="userdoc1.html">User Manual</a>
+			</li>              			           
+			<li class="none">
+              <a href="messagesamples.html">Message Samples</a>
+			</li>  
+			<li class="none">
+              <a href="https://openhie.projects.openhealthtools.org/" target="contentBox">OpenEMPI</a>
+			</li>             
+        </ul>          
+        <h5>Project Info</h5>
+        <ul>              
+			<li class="none">
+              <a href="https://sourceforge.net/tracker/?group_id=241607" target="OpenPIXPDQDoc">Issue Tracking</a>
+			</li>              
+			<li class="none">
+              <a href="https://sourceforge.net/svn/?group_id=241607" target="OpenPIXPDQDoc">SVN Repository</a>
+			</li>              
+			<li class="none">
+              <a href="https://sourceforge.net/mail/?group_id=241607" target="OpenPIXPDQDoc">Mailing Lists</a>
+			</li>              
+			<li class="none">
+              <a href="https://sourceforge.net/project/memberlist.php?group_id=241607" target="OpenPIXPDQDoc">Developers</a>
+			</li>
+        </ul>
+        <h5>Project Reports</h5>
+        <ul>              
+			<li class="none">
+              <a href="mesatests.html">Mesa Tests</a>
+			</li>
+			<li class="none">
+              <a href="IHEIS.html">IHE Integration Statment</a>
+			</li>            
+        </ul> 
+			 
+        <a href="http://sourceforge.net" title="Hosted on SourceForge.net" id="poweredBy">
+            <img alt="Hosted on SourceForge.net" src="http://sflogo.sourceforge.net/sflogo.php?group_id=38899&type=1" />
+        </a>
+        <a href="http://www.misys.com/" title="powered by Misys" id="poweredBy">
+            <img alt="powered by Misys" src="images/clip_image002.jpg" />
+        </a>
+	</div>
+    </div>
+	<div id="bodyColumn">
+		<div id="contentBox">
+		<h3>OpenPIXPDQ</h3>
+		<h5>Introduction:</h5>
+<p>IHE (Integrating the Healthcare Enterprise) is an initiative by healthcare professionals and industry to improve the way computer systems in healthcare share information. IHE promotes the coordinated use of established standards such as DICOM and HL7 to address specific clinical needs in support of optimal patient care. Systems developed in accordance with IHE standards are better able to communicate with one another and empower care providers to use information more effectively. Please refer to the <a href="http://www.ihe.net/" target="_blank">IHE</a> site for more details.</p>
+
+<p><strong>PIX: </strong></p>
+<p>One of the core components of IHE IT infrastructure is PIX (Patient Identifier Cross-referencing). The PIX integration profile enables the cross referencing of patient identifiers from multiple patient identifier domains by:</p>
+<ul id="contents">
+<li>1. Transmitting patient identity information from an identity source to the Patient Identifier Cross-reference Manager. </li>
+<li>2. Providing the ability to access the list(s) of cross-referenced patient identifiers either via a query/ response or via an update notification. </li>
+</ul>
+<p>Please refer to <a href="http://wiki.ihe.net/index.php?title=Patient_Identifier_Cross_Referencing" target="_blank">Patient Identifier Cross Referencing  on the IHE wiki </a>for more details.</p>
+
+<p><strong>PDQ: </strong></p>
+<p>The PDQ (Pateint Demographics Query) integration profile lets applications query a central patient information server in order to retrieve patient demographics and encounter information.</p>
+
+<p><strong>Scope:</strong></p>
+<p>This project charter document depicts the components that are being developed for the server side implementation of PIX/PDQ, focusing on the PIX Manager and PD Supplier actors. Currently IHE supports both HL7 2.x standards and HL7 v3.0 standards for PIX/PDQ manager. In the first release of this project, HL7 v2.x transactions are supported, and HL7 v3.0 support will be added in future release. </p>
+
+ 
+<p>OpenPIXPDQ: </P>
+<p>OpenPIXPDQ implements four server side transactions associated with IHE’s PIX/PDQ integration profile.   </p>
+
+<p><ul id="contents"><li>1.	PIX Feed<ul><li>
+This transaction communicates patient information, including the corroboration of demographics data, after a patient’s identity is established, modified, merged – after the key corroborating demographic data has been modified.</li></ul></li>
+ <li>2. PIX Query<ul><li>
+This transaction involves a request by the Patient Identifier Cross-reference Consumer Actor for a list of patient identifiers that correspond to a patient identifier known by the consumer. </li></ul></li>
+<li>3. PIX update notification <ul><li>
+This transaction involves the Patient Identifier Cross-reference Manager Actor providing notification of updates to Patient Identifier Cross-reference Associations to Patient Identifier Cross-reference Consumers that have registered their interest in receiving such notifications.</li></ul></li>
+<li>4. PDQ query <ul><li>
+This transaction involves a request by the Patient Demographics Consumer actor for information about patients whose demographic data match data provided in the query message.</li></ul></li>
+</ul>
+</p>
+<p>In addition to the above, ATNA Audit Trail Log and TLS transaction are also implemented to secure PIX/PDQ transactions. </p>
+
+<p>The PIX Manager and PDQ Supplier have an underlying eMPI that accesses patient matching algorithms and a patient data manipulation API for adding/updating/merging patients. The architecture for OpenPIXPDQ has a pluggable eMPI underneath and clients will have flexibility to use any other eMPI as well. A high-level architecture of OpenPIXPDQ is shown below.</p>
+<img src="images/image004.gif" width=547 height=419/>
+<p>The PIX Manager and PDQ Supplier are the two major server side actors. Four major transactions happen here: </p>
+<p><ul id="contents">
+<li>1.	A PIX Source submits a PIX Feed to the PIX Manager, and the PIX Manager sends an acknowledgement back.</li>
+<li>2.	A PIX Consumer sends a PIX Query to the PIX Manager who sends a PIX query response back. </li>
+<li>3.	The PIX Manager sends a PIX Update Notification message to a subscribed PIX Consumer, and the consumer sends an acknowledgment back.</li>
+<li>4.	A PDQ Consumer sends a PDQ Query to the PDQ Supplier which returns a query result to the PDQ Consumer.</li>
+</ul>
+</P>
+<p>In addition, there will be 3 auxiliary components, namely Audit Log, Secure Transaction and Actor Configuration. Audit Log is a client side implementation of ATNA profile, and provides an API to send logs to an Audit Trail Server. Secure Transaction, also specified by the ATNA profile, serves the 4 transactions of PIX Manager and PDQ Supplier. Actor Configuration is required to configure PIX Manager and PDQ Supplier.</p>
+
+<p>One of the non-IHE components in this project is eMPI adapter which allows communication between the PIX/PDQ server and a pluggable eMPI.  For each of the 4 PIX/PDQ Sever transactions, this adapter is invoked to provide a bridge for passing information to and from the eMPI. The eMPI component should provide basic functions such as add/update a patient, merge patients, search a patient by patient id and patient demographics. The current eMPI used by OpenPIXPDQ is OpenEMPI from the <a href="https://openhie.projects.openhealthtools.org/" target="_blank">openhie</a> project on Open Health Tools (OHT).  </p>
+
+
+
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+org.openhealthexchange.openpixpdq.data
+org.openhealthexchange.openpixpdq.ihe
+org.openhealthexchange.openpixpdq.ihe.audit
+org.openhealthexchange.openpixpdq.ihe.audit.jaxb
+org.openhealthexchange.openpixpdq.ihe.audit.jaxb.impl
+org.openhealthexchange.openpixpdq.ihe.audit.jaxb.impl.runtime
+org.openhealthexchange.openpixpdq.ihe.configuration
+org.openhealthexchange.openpixpdq.ihe.impl_v2
+org.openhealthexchange.openpixpdq.ihe.impl_v2.hl7
+org.openhealthexchange.openpixpdq.ihe.log
+org.openhealthexchange.openpixpdq.ihe.pdq
+org.openhealthexchange.openpixpdq.ihe.registry
+org.openhealthexchange.openpixpdq.util
